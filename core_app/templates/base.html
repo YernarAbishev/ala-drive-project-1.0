@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static './css/style.css' %}">
+    <link rel="stylesheet" href="{% static './css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static './css/tinymce.min.css' %}">
+</head>
+<body>
+    <header class="navbar navbar-expand-lg bg-primary navbar-dark">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'start_page' %}"><img class="logo" src="{% static './images/logo.svg' %}" alt="Logo"></a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'start_page' %}">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'news_page' %}">Новости</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'lessons_page' %}">Уроки</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'simulator_page' %}">Симулятор</a>
+              </li>
+
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  @{{ user.username }}
+                </a>
+                <ul class="dropdown-menu">
+                  {% if user.is_superuser %}
+                  <li><a class="dropdown-item" href="/admin/core_app/">Панель администратора</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  {% endif %}
+                  <li><a class="dropdown-item" href="{% url 'logout_view' %}">Выход</a></li>
+                </ul>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login_view' %}">Вход</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+    </header>
+
+    <main class="main">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <script src="{% static './js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static './js/tinymce.min.js' %}"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'advlist autolink lists insertdatetime media image preview link charmap print preview hr anchor pagebreak',
+            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | image media preview |',
+            menubar: false
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{% extends './base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ lesson.title }}{% endblock %}
+
+{% block content %}
+<style>
+    img {
+        width: 100%;
+    }
+</style>
+<section class="block">
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb mb-5">
+                <li class="breadcrumb-item"><a href="{% url 'start_page' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'lessons_page' %}">Уроки</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ lesson.title }}</li>
+            </ol>
+        </nav>
+        <div class="row">
+            <div class="col-md-8">
+                <h1 class="title text-primary">{{ lesson.title }}</h1>
+                <div class="card">
+                    <div class="card-body">
+                        {% autoescape off %}
+                        {{ lesson.description }}
+                        {% endautoescape %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <h2 class="title text-primary">Уроки</h2>
+                <div class="list-group">
+                    {% for l in lessons %}
+                    <a href="{% url 'lessons_detail_page' pk=l.pk %}" class="list-group-item list-group-item-action">{{ forloop.counter }}. {{ l.title }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+
+
+
+
+

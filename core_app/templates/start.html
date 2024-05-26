@@ -1,0 +1,28 @@
+{% extends './base.html' %}
+{% block title %}Главная{% endblock %}
+{% block content %}
+<section class="block">
+    <div class="container">
+        <h1 class="title text-primary mb-5">Последние новости</h1>
+        <div class="row mb-4">
+            {% for last_post in last_posts %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ last_post.image.url }}" alt="{{ last_post.title }}" class="card-img">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ last_post.title|truncatechars:20 }}</h5>
+                        <h6 class="card-title">{{ last_post.posted_date|date:"d.m.Y" }}</h6>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <a href="{% url 'news_detail_page' pk=last_post.pk %}" class="btn btn-primary">Читать</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center">
+            <a href="{% url 'news_page' %}" class="btn btn-primary">Все новости</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

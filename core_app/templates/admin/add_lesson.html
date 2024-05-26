@@ -1,0 +1,29 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Вход в систему{% endblock %}
+
+{% block content %}
+<section class="pt-5 pb-5">
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb mb-5">
+                <li class="breadcrumb-item"><a href="{% url 'start_page' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'start_page' %}">Панель администратора</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'start_page' %}">Уроки</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Добавить урок</li>
+            </ol>
+        </nav>
+        <div class="card">
+            <div class="card-body">
+                <h1 class="title">Добавить урок</h1>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <button class="btn btn-primary">Добавить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

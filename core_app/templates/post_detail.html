@@ -1,0 +1,30 @@
+{% extends './base.html' %}
+
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<section class="block">
+    <div class="container">
+        <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol class="breadcrumb mb-5">
+                <li class="breadcrumb-item"><a href="{% url 'start_page' %}">Главная</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'news_page' %}">Новости</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ post.title }}</li>
+            </ol>
+        </nav>
+        <h1 class="title text-primary">{{ post.title }}</h1>
+        <h5>{{ post.posted_date|date:"d.m.Y" }}</h5>
+        <img src="{{ post.image.url }}" class="w-100 mt-3 mb-3" alt="{{ post.title }}">
+        <p>{{ post.description }}</p>
+    </div>
+</section>
+{% endblock %}
+
+
+
+
+
+
+
+
